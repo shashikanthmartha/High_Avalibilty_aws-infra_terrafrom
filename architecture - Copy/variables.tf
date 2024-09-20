@@ -54,20 +54,7 @@ variable "instance_type" {
   type        = string
   
 }
-variable "auto_private_subnets" {
-  description = "The private subnets to use for the launch template"
-  type        = list(object({
-    id = string
-  }))
-  
-}
-variable "auto_public_subnets" {
-  description = "The public subnets to use for the launch template"
-  type        = list(object({
-    id = string
-  }))
-  
-}
+
 variable "vpc_id" {
   description = "The VPC ID to use for the launch template"
   type        = string
