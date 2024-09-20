@@ -8,6 +8,12 @@ module "vpc" {
     public_subnets = var.public_subnets
     private_subnets = var.private_subnets
 }
+module "public_route_table" {
+    source = "./modules/public_RT_RTA_IGW"
+    public_subnets = module.vpc.public_subnets
+    env = var.env
+    vpc_id = module.vpc.vpc_id
+}
 module "nat_gateway" {
     source = "./modules/nat_gateway"
     public_subnets = module.vpc.public_subnets
