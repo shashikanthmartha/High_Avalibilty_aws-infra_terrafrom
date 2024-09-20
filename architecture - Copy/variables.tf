@@ -63,13 +63,7 @@ variable "alb_sg_ingress_rules" {
 variable "alb_sg_egress_rules" {
   type = any
 }
-variable "user_data" {
-  description = "The user data to use for the launch template"
-  type        = object({
-    rendered = string
-  })
-  
-}
+
 variable "ec2_sg_ingress_rules" {
   type = any
   
