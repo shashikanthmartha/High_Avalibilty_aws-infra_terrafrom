@@ -27,6 +27,14 @@ module "private_route_table" {
     nat_gateway_ids = module.nat_gateway.nat_gateway_ids
     vpc_id = module.vpc.vpc_id
 }
+module "rdssg" {
+    source = "./modules/RDS"
+    env = var.env
+    rds_sg_ingress_rules = var.rds_sg_ingress_rules
+    rds_sg_egress_rules = var.rds_sg_egress_rules
+    vpc_id = module.vpc.vpc_id
+    rds_privatesubnets = module.vpc.private_subnets
+}
 # module "public_route_table" {
 #     source = "./modules/public_RT_RTA_IGW"
 #     public_subnets = module.vpc.public_subnets
