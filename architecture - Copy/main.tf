@@ -8,11 +8,11 @@ module "vpc" {
     public_subnets = var.public_subnets
     private_subnets = var.private_subnets
 }
-# module "nat_gateway" {
-#     source = "./modules/nat_gateway"
-#     public_subnets = module.vpc.public_subnets
-#     env = var.env
-# }
+module "nat_gateway" {
+    source = "./modules/nat_gateway"
+    public_subnets = module.vpc.public_subnets
+    env = var.env
+}
 # module "private_route_table" {
 #     source = "./modules/private_route_table"
 #     private_subnets = var.private_subnets
