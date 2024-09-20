@@ -42,7 +42,7 @@ resource "aws_db_instance" "db" {
   storage_encrypted       = var.rds_conf.storage_encrypted
   kms_key_id              = var.rds_conf.storage_encrypted == true ? data.aws_kms_key.db_kms_key.arn : null
   vpc_security_group_ids  = ["${aws_security_group.rds_sg.id}"]
-  db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group.name
+  db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group[0].name
   publicly_accessible     = var.rds_conf.publicly_accessible
   backup_retention_period = var.rds_conf.backup_retention_period
   skip_final_snapshot     = true
