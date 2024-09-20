@@ -39,11 +39,7 @@ variable "rds_sg_egress_rules" {
   type = any
 }
 
-variable "local_ssm_policies" {
-  description = "The policies to attach to the SSM role"
-  type        = map(string)
-  
-}
+
 variable "ami_id" {
   description = "The AMI ID to use for the launch template"
   type        = string  
