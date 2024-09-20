@@ -56,6 +56,6 @@ jobs:
         working-directory: ./architecture - Copy
       - name: Terraform destroy
         id: destroy
-        if: ${{ github.event.inputs.terraform_action == 'destroy' && github.event.inputs.terraform_plan == 'ok' }}
+        if: ${{ github.event.inputs.terraform_action == 'destroy' && github.event.inputs.terraform_plan == 'not' }}
         run: terraform ${{ github.event.inputs.terraform_action }} --auto-approve
         working-directory: ./architecture - Copy
