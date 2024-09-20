@@ -1,15 +1,16 @@
 
 resource "aws_eip" "nat" {
-  for_each = var.public_subnets
+  count = length(var.public_subnets)
 }
 
 resource "aws_nat_gateway" "nat" {
-  for_each = aws_eip.nat
+ 
+  count = length(var.public_subnets)
 
-  allocation_id = each.value.id
-  subnet_id     = var.public_subnets[each.key]
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = var.public_subnets[count.index]
 
   tags = {
-    Name = "${var.env}-nat-gateway-${each.key}"
+    Name = "${var.env}-nat-gateway-${count.index}"
   }
 }
