@@ -51,11 +51,7 @@ variable "instance_type" {
   
 }
 
-variable "vpc_id" {
-  description = "The VPC ID to use for the launch template"
-  type        = string
-  
-}
+
 
 variable "alb_sg_ingress_rules" {
     type=any
