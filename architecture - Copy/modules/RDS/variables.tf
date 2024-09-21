@@ -7,8 +7,15 @@ variable "rds_privatesubnets" {
   type = list(string)
 }
 variable "rds_conf" {
-  type    = any
-  default = {}
+  description = "Configuration for RDS instance"
+  type = object({
+    allocated_storage = number
+    storage_type      = string
+    engine            = string
+    engine_version    = string
+    instance_class    = string
+    multi_az          = bool
+  })
 }
 variable "rds_sg_ingress_rules" {
   type = any
