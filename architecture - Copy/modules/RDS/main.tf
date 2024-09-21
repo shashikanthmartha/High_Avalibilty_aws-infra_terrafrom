@@ -9,9 +9,7 @@ resource "aws_kms_alias" "db_kms_key_alias" {
   target_key_id = aws_kms_key.db_kms_key.id
 }
 
-data "aws_kms_key" "db_kms_key" {
-  key_id = "alias/shashi_rds/rds"
-}
+
 resource "aws_db_subnet_group" "rds_subnet_group" {
   count = length(var.rds_privatesubnets)
   name       = "${var.env}-rds-ssubnet-group"
@@ -40,7 +38,7 @@ resource "aws_db_instance" "db" {
   username                = var.rds_conf.username
   password                = aws_ssm_parameter.db_password.value
   storage_encrypted       = var.rds_conf.storage_encrypted
-  kms_key_id              = var.rds_conf.storage_encrypted == true ? data.aws_kms_key.db_kms_key.arn : null
+  kms_key_id              = aws_kms_alias.db_kms_key_alias.target_key_id
   vpc_security_group_ids  = ["${aws_security_group.rds_sg.id}"]
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group[0].name
   publicly_accessible     = var.rds_conf.publicly_accessible
