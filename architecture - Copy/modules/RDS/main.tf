@@ -11,12 +11,12 @@ resource "aws_kms_alias" "db_kms_key_alias" {
 
 
 resource "aws_db_subnet_group" "rds_subnet_group" {
-  count = length(var.rds_privatesubnets)
-  name       = "${var.env}-rds-ssubnet-group"
-  subnet_ids = [var.rds_privatesubnets[count.index]]
+  count = length(var.rds_privatesubnets) > 1 ? 1 : 0
+  name       = "${var.env}-rds-subnet-group - ${count.index}"
+  subnet_ids = var.rds_privatesubnets
 
   tags = {
-    Name = "My DB Subnet Group in ${var.env}"
+    Name = "${var.env}-rds-subnet-group"
   }
 }
 
@@ -50,7 +50,7 @@ resource "aws_ssm_parameter" "db_password" {
   name   = "/rds/${var.env}-rds/password"
   value  = var.rds_multi_az == true ? random_password.root_password.result : "test"
   type   = "SecureString"
-  key_id = "alias/shashi_rds/ssm"
+  key_id = "alias/${aws_kms_key.db_kms_key.id}"
 }
 resource "aws_security_group" "rds_sg" {
   name        = "${var.env}-rds-sg"
