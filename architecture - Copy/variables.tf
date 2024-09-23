@@ -98,30 +98,9 @@ variable "instance_type" {
   type        = string
   
 }
-variable "auto_private_subnets" {
-  description = "The private subnets to use for the launch template"
-  type        = list(object({
-    id = string
-  }))
-  
-}
-variable "auto_public_subnets" {
-  description = "The public subnets to use for the launch template"
-  type        = list(object({
-    id = string
-  }))
-  
-}
-variable "vpc_id" {
-  description = "The VPC ID to use for the launch template"
-  type        = string
-  
-}
-variable "aws_acm_certificate_cert_arn" {
-  description = "The ARN of the ACM certificate to use for the ALB"
-  type        = string  
-  
-}
+
+
+
 variable "alb_sg_ingress_rules" {
     type=any
 }
