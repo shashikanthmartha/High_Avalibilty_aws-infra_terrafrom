@@ -5,7 +5,7 @@ variable "env" {
 }
 variable "local_ssm_policies" {
   description = "The policies to attach to the SSM role"
-  type        = map(string)
+  type        = list(string)
   
 }
 variable "ami_id" {
