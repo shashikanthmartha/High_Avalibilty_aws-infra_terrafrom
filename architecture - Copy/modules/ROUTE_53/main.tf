@@ -1,13 +1,13 @@
 data "aws_route53_zone" "main" {
-  name       = "shashidevops.cloud." # Ensure the domain name ends with a dot
+  name       = "shashidevops.com." # Ensure the domain name ends with a dot
   depends_on = [aws_route53_zone.main]
 }
 resource "aws_route53_zone" "main" {
-  name = "shashidevops.cloud"
+  name = "shashidevops.com"
 }
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.main.zone_id
-  name    = "www.shashidevops.cloud"
+  name    = "www.shashidevops.com"
   type    = "A"
 
   alias {
@@ -17,13 +17,14 @@ resource "aws_route53_record" "www" {
   }
 }
 resource "aws_acm_certificate" "example_cert" {
-  domain_name       = "www.shashidevops.cloud"
+  domain_name       = "www.shashidevops.com"
   validation_method = "DNS"
 
-  subject_alternative_names = ["*.shashidevops.cloud"]
+  
 
   tags = {
     Environment = "production"
+    Name        = "example-cert"
   }
 
   lifecycle {
@@ -49,6 +50,6 @@ resource "aws_route53_record" "cert_validation" {
 resource "aws_acm_certificate_validation" "example_cert" {
   certificate_arn         = aws_acm_certificate.example_cert.arn
   validation_record_fqdns = [for record in aws_route53_record.cert_validation : record.fqdn]
-  depends_on              = [aws_route53_record.cert_validation]
+  
 
 }
