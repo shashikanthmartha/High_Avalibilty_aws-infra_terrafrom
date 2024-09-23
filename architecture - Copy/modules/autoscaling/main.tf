@@ -136,34 +136,14 @@ resource "aws_security_group" "alb_sg" {
   name        = "${var.env}-alb-sg"
   description = "Security group for the application load balancer"
   vpc_id      = var.vpc_id
-  
-  dynamic "egress" {
-    for_each = var.alb_sg_egress_rules
-    content {
-      description     = format("Allow access for %s", egress.key)
-      from_port       = egress.value[count.index].from_port
-      to_port         = egress.value[count.index].to_port
-      protocol        = lookup(egress.value[count.index], "protocol", "tcp")
-      cidr_blocks     = lookup(egress.value[count.index], "cidr_blocks", [])
-      security_groups = lookup(egress.value[count.index], "security_groups", [])
-    }
-  }
-  dynamic "ingress" {
-    for_each = var.alb_sg_ingress_rules
-    content {
-      description     = format("Allow access for %s", ingress.key)
-      from_port       = ingress.value[count.index].from_port
-      to_port         = ingress.value[count.index].to_port
-      protocol        = lookup(ingress.value[count.index], "protocol", "tcp")
-      cidr_blocks     = lookup(ingress.value[count.index], "cidr_blocks", [])
-      security_groups = lookup(ingress.value[count.index], "security_groups", [])
-    }
-  } 
-
+  ingress = var.alb_sg_ingress_rules
+  egress = var.alb_sg_egress_rules
   tags = {
     Name = "${var.env}-ALBSecurityGroup"
   }
 }
+
+
 
 resource "aws_autoscaling_group" "app_asg" {
   launch_template {
@@ -196,33 +176,12 @@ resource "aws_autoscaling_group" "app_asg" {
     propagate_at_launch = true
   }
 }
-
 resource "aws_security_group" "ec2_sg" {
   name        = "${var.env}-ec2-sg"
   description = "Security group for EC2 instances in the ASG"
   vpc_id      = var.vpc_id
-  dynamic "ingress" {
-    for_each = var.ec2_sg_ingress_rules
-    content {
-      description     = format("Allow access for %s", ingress.key)
-      from_port       = ingress.value[count.index].from_port
-      to_port         = ingress.value[count.index].to_port
-      protocol        = lookup(ingress.value[count.index], "protocol", "tcp")
-      cidr_blocks     = lookup(ingress.value[count.index], "cidr_blocks", [])
-      security_groups = lookup(ingress.value[count.index], "security_groups", [])
-    }
-  }
-  dynamic "egress" {
-    for_each = var.ec2_sg_egress_rules
-    content {
-      description     = format("Allow access for %s", egress.key)
-      from_port       = egress.value[count.index].from_port
-      to_port         = egress.value[count.index].to_port
-      protocol        = lookup(egress.value[count.index], "protocol", "tcp")
-      cidr_blocks     = lookup(egress.value[count.index], "cidr_blocks", [])
-      security_groups = lookup(egress.value[count.index], "security_groups", [])
-    }
-  }
+  ingress = var.ec2_sg_ingress_rules
+  egress = var.ec2_sg_egress_rules
 
   tags = {
     Name = "${var.env}-EC2SecurityGroup"
