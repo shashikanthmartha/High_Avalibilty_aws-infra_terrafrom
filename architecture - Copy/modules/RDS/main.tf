@@ -48,7 +48,7 @@ resource "aws_db_instance" "db" {
 
 resource "aws_ssm_parameter" "db_password" {
   name   = "/rds/${var.env}-rds/password"
-  value  = var_multi_az == true ? random_password.root_password.result : "test"
+  value  = var.rds_multi_az == true ? random_password.root_password.result : "test"
   type   = "SecureString"
   key_id = "alias/shashi_rds/ssm"
 }
