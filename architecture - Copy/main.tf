@@ -26,25 +26,24 @@ module "private_route_table" {
     nat_gateway_ids = module.nat_gateway.nat_gateway_ids
     vpc_id = module.vpc.vpc_id
 }
-
-# module "rdssg" {
-#     source = "./modules/RDS"
-#     env = var.env
-#     rds_privatesubnets = module.vpc.private_subnets
-#     rds_allocated_storage = var.rds_allocated_storage
-#     rds_storage_type = var.rds_storage_type
-#     rds_engine = var.rds_engine
-#     rds_engine_version = var.rds_engine_version
-#     rds_instance_class = var.rds_instance_class
-#     rds_multi_az = var.rds_multi_az
-#     rds_sg_ingress_rules = var.rds_sg_ingress_rules
-#     rds_sg_egress_rules = var.rds_sg_egress_rules
-#     vpc_id = module.vpc.vpc_id
-#     rds_publicly_accessible = var.rds_publicly_accessible
-#     rds_storage_encrypted = var.rds_storage_encrypted
-#     rds_username = var.rds_username
-#     rds_backup_retention_period = var.rds_backup_retention_period
-# }
+module "rdssg" {
+    source = "./modules/RDS"
+    env = var.env
+    rds_privatesubnets = module.vpc.private_subnets
+    rds_allocated_storage = var.rds_allocated_storage
+    rds_storage_type = var.rds_storage_type
+    rds_engine = var.rds_engine
+    rds_engine_version = var.rds_engine_version
+    rds_instance_class = var.rds_instance_class
+    rds_multi_az = var.rds_multi_az
+    rds_sg_ingress_rules = var.rds_sg_ingress_rules
+    rds_sg_egress_rules = var.rds_sg_egress_rules
+    vpc_id = module.vpc.vpc_id
+    rds_publicly_accessible = var.rds_publicly_accessible
+    rds_storage_encrypted = var.rds_storage_encrypted
+    rds_username = var.rds_username
+    rds_backup_retention_period = var.rds_backup_retention_period
+}
 # module "efs" {
 #     source = "./modules/efs"
 #     env = var.env
