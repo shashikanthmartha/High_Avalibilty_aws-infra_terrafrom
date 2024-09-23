@@ -5,10 +5,7 @@ variable "env" {
 }
 variable "efs_private_subnets" {
   description = "The private subnets in which the EFS will be created"
-  type        = list(object({
-    id = string
-  }))
-  
+  type        = list(string)
 }
 variable "vpc_id" {
   description = "The VPC in which the EFS will be created"
