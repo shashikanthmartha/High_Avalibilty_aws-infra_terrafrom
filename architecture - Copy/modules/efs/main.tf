@@ -7,10 +7,12 @@ resource "aws_efs_file_system" "app_efs" {
 }
 
 resource "aws_efs_mount_target" "efs_mt" {
-  for_each        = { for idx, subnet in var.efs_private_subnets : idx => subnet }
+  count           = length(var.efs_private_subnets)
   file_system_id  = aws_efs_file_system.app_efs.id
-  subnet_id       = each.value.id
+  subnet_id       = element(var.efs_private_subnets, count.index)
   security_groups = [aws_security_group.efs_sg.id]
+  
+  
 }
 
 resource "aws_security_group" "efs_sg" {
