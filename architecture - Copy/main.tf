@@ -63,21 +63,18 @@ module "rout53" {
     app_alb_zone_id=module.auto_scaling.app_alb_zone_id
 }
 
-
-
-
-# module "auto_scaling" {
-#     source = "./modules/autoscaling"
-#     env = var.env
-#     local_ssm_policies = local.local_ssm_policies
-#     ami_id = var.ami_id
-#     instance_type = var.instance_type
-#     auto_private_subnets = module.vpc.private_subnets
-#     auto_public_subnets = module.vpc.public_subnets
-#     vpc_id = module.vpc.vpc_id
-#     aws_acm_certificate_cert_arn =module.rout53.aws_acm_certificate_cert_arn
-#     user_data = data.template_file.user_data
-# }
+module "auto_scaling" {
+    source = "./modules/autoscaling"
+    env = var.env
+    local_ssm_policies = local.local_ssm_policies
+    ami_id = var.ami_id
+    instance_type = var.instance_type
+    auto_private_subnets = module.vpc.private_subnets
+    auto_public_subnets = module.vpc.public_subnets
+    vpc_id = module.vpc.vpc_id
+    aws_acm_certificate_cert_arn =module.rout53.aws_acm_certificate_cert_arn
+    user_data = data.template_file.user_data
+}
 # module "waf" {
 #  source = "./modules/WAF"
 #  env = var.env
