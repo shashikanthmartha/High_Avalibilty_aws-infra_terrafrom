@@ -38,7 +38,7 @@ resource "aws_db_instance" "db" {
   username                = var.rds_username
   password                = aws_ssm_parameter.db_password.value
   storage_encrypted       = var.rds_storage_encrypted
-  kms_key_id              = aws_kms_alias.db_kms_key_alias.target_key_id
+  kms_key_id              = aws_kms_key.db_kms_key.arn
   vpc_security_group_ids  = ["${aws_security_group.rds_sg.id}"]
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group[0].name
   publicly_accessible     = var.rds_publicly_accessible
