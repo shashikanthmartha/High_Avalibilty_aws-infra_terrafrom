@@ -57,12 +57,11 @@ data "template_file" "user_data" {
   efs_file_system_id = module.efs.efs_file_system_id
   }
 }
-module "rout53" {
-    source = "./modules/ROUTE_53"
-    app_alb_dns_name=module.auto_scaling.app_alb_dns_name
-    app_alb_zone_id=module.auto_scaling.app_alb_zone_id
-}
-
+# module "rout53" {
+#     source = "./modules/ROUTE_53"
+#     app_alb_dns_name=module.auto_scaling.app_alb_dns_name
+#     app_alb_zone_id=module.auto_scaling.app_alb_zone_id
+# }
 module "auto_scaling" {
     source = "./modules/autoscaling"
     env = var.env
@@ -72,7 +71,7 @@ module "auto_scaling" {
     auto_private_subnets = module.vpc.private_subnets
     auto_public_subnets = module.vpc.public_subnets
     vpc_id = module.vpc.vpc_id
-    aws_acm_certificate_cert_arn =module.rout53.aws_acm_certificate_cert_arn
+   # aws_acm_certificate_cert_arn =module.rout53.aws_acm_certificate_cert_arn
     user_data = data.template_file.user_data
 }
 # module "waf" {
