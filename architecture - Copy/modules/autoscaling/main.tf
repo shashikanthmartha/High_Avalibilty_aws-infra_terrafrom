@@ -46,9 +46,10 @@ resource "aws_launch_template" "app" {
   monitoring {
     enabled = true
   }
- network_interfaces {
+network_interfaces {
+   
     associate_public_ip_address = false
-    subnet_id                   = var.auto_private_subnet[0].id
+    subnet_id                   = var.auto_private_subnets[count.index]
     security_groups             = [aws_security_group.ec2_sg.id]
   }
 
