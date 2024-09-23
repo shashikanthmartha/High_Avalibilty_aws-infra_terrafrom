@@ -29,26 +29,26 @@ resource "random_password" "root_password" {
 resource "aws_db_instance" "db" {
   depends_on              = [aws_db_subnet_group.rds_subnet_group]
   identifier              = "${var.env}-rds"
-  allocated_storage       = var.rds_conf.allocated_storage
-  storage_type            = var.rds_conf.storage_type
-  engine                  = var.rds_conf.engine
-  engine_version          = var.rds_conf.engine_version
-  instance_class          = var.rds_conf.instance_class
-  multi_az                = var.rds_conf.multi_az
-  username                = var.rds_conf.username
+  allocated_storage       = var.rds_allocated_storage
+  storage_type            = var.rds_storage_type
+  engine                  = var.rds_engine
+  engine_version          = var.rds_engine_version
+  instance_class          = var.rds_instance_class
+  multi_az                = var.rds_multi_az
+  username                = var.rds_username
   password                = aws_ssm_parameter.db_password.value
-  storage_encrypted       = var.rds_conf.storage_encrypted
+  storage_encrypted       = var.rds_storage_encrypted
   kms_key_id              = aws_kms_alias.db_kms_key_alias.target_key_id
   vpc_security_group_ids  = ["${aws_security_group.rds_sg.id}"]
   db_subnet_group_name    = aws_db_subnet_group.rds_subnet_group[0].name
-  publicly_accessible     = var.rds_conf.publicly_accessible
-  backup_retention_period = var.rds_conf.backup_retention_period
+  publicly_accessible     = var.rds_publicly_accessible
+  backup_retention_period = var.rds_backup_retention_period
   skip_final_snapshot     = true
 }
 
 resource "aws_ssm_parameter" "db_password" {
   name   = "/rds/${var.env}-rds/password"
-  value  = var.rds_conf.multi_az == true ? random_password.root_password.result : "test"
+  value  = var_multi_az == true ? random_password.root_password.result : "test"
   type   = "SecureString"
   key_id = "alias/shashi_rds/ssm"
 }
