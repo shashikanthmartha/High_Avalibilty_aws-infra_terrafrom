@@ -38,27 +38,7 @@ variable "aws_acm_certificate_cert_arn" {
   type        = string  
   
 }
-variable "alb_sg_ingress_rules" {
-  description = "List of ingress rules for the ALB security group"
-  type = list(object({
-    from_port       = number
-    to_port         = number
-    protocol        = string
-    cidr_blocks     = list(string)
-    security_groups = optional(list(string), [])
-  }))
-}
 
-variable "alb_sg_egress_rules" {
-  description = "List of egress rules for the ALB security group"
-  type = list(object({
-    from_port       = number
-    to_port         = number
-    protocol        = string
-    cidr_blocks     = list(string)
-    security_groups = optional(list(string), [])
-  }))
-}
 variable "user_data" {
   description = "The user data to use for the launch template"
   type        = object({
@@ -66,25 +46,44 @@ variable "user_data" {
   })
   
 }
-variable "ec2_sg_ingress_rules" {
-  description = "List of ingress rules for the EC2 security group"
-  type = list(object({
-    from_port       = number
-    to_port         = number
-    protocol        = string
-    cidr_blocks     = list(string)
-    security_groups = optional(list(string), [])
-  }))
+# variable "alb_sg_ingress_rules" {
+#   description = "List of ingress rules for the ALB security group"
+#   type = list(object({
+#     from_port       = number
+#     to_port         = number
+#     protocol        = string
+#     cidr_blocks     = list(string)
+#     security_groups = optional(list(string), [])
+#   }))
+# }
+
+# variable "alb_sg_egress_rules" {
+#   description = "List of egress rules for the ALB security group"
+#   type = list(object({
+#     from_port       = number
+#     to_port         = number
+#     protocol        = string
+#     cidr_blocks     = list(string)
+#     security_groups = optional(list(string), [])
+#   }))
+# }
+# variable "ec2_sg_ingress_rules" {
+#   description = "value"
+#   type = list(object({
+#     from_port       = number
+#     to_port         = number
+#     protocol        = string
+#     cidr_blocks     = list(string)
+#     security_groups = optional(list(string), [])
+#   }))
   
-}
-variable "ec2_sg_egress_rules" {
-  description = "List of ingress rules for the EC2 security group"
-  type = list(object({
-    from_port       = number
-    to_port         = number
-    protocol        = string
-    cidr_blocks     = list(string)
-    security_groups = optional(list(string), [])
-  }))
-  
-}
+# }
+# variable "ec2_sg_egress_rules" {
+#   type = list(object({
+#     from_port       = number
+#     to_port         = number
+#     protocol        = string
+#     cidr_blocks     = list(string)
+#     security_groups = optional(list(string), [])
+#   }))
+# }
