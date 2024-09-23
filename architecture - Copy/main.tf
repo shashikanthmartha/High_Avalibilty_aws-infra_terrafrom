@@ -51,12 +51,12 @@ module "efs" {
     vpc_id = module.vpc.vpc_id
     ec2_sg_id = module.rdssg.rds_sg_id
 }
-# data "template_file" "user_data" {
-#   template = file("./templates/user_data.tpl")
-#   vars = {
-#   efs_file_system_id = module.efs.efs_file_system_id
-#   }
-# }
+data "template_file" "user_data" {
+  template = file("./templates/user_data.tpl")
+  vars = {
+  efs_file_system_id = module.efs.efs_file_system_id
+  }
+}
 # module "rout53" {
 #     source = "./modules/ROUTE_53"
 #     app_alb_dns_name=module.auto_scaling.app_alb_dns_name
