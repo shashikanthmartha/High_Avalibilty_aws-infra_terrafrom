@@ -46,10 +46,13 @@ resource "aws_launch_template" "app" {
   monitoring {
     enabled = true
   }
-  network_interfaces {
-    associate_public_ip_address = false
-    subnet_id                   = element(var.auto_private_subnets, count.index)
-    security_groups             = [aws_security_group.ec2_sg.id]
+ dynamic "network_interface" {
+    for_each = var.auto_private_subnets
+    content {
+      associate_public_ip_address = false
+      subnet_id                   = network_interface.value
+      security_groups             = [aws_security_group.ec2_sg.id]
+    }
   }
 
   user_data = base64encode(var.user_data.rendered)
