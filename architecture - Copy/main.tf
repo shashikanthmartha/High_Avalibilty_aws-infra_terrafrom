@@ -45,13 +45,13 @@ module "rdssg" {
     rds_username = var.rds_username
     rds_backup_retention_period = var.rds_backup_retention_period
 }
-# module "efs" {
-#     source = "./modules/efs"
-#     env = var.env
-#     efs_private_subnets = module.vpc.private_subnets
-#     vpc_id = module.vpc.vpc_id
-#     ec2_sg_id = module.rdssg.rds_sg_id
-# }
+module "efs" {
+    source = "./modules/efs"
+    env = var.env
+    efs_private_subnets = module.vpc.private_subnets
+    vpc_id = module.vpc.vpc_id
+    ec2_sg_id = module.rdssg.rds_sg_id
+}
 # data "template_file" "user_data" {
 #   template = file("./templates/user_data.tpl")
 #   vars = {
