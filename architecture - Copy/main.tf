@@ -27,7 +27,7 @@ module "private_route_table" {
     vpc_id = module.vpc.vpc_id
 }
 
-module "rdssg" {
+# module "rdssg" {
 #     source = "./modules/RDS"
 #     env = var.env
 #     rds_privatesubnets = module.vpc.private_subnets
