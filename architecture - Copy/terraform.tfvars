@@ -35,7 +35,8 @@ rds_sg_egress_rules = {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
-}alb_sg_ingress_rules = [
+}
+alb_sg_ingress_rules = [
   {
     from_port   = 443
     to_port     = 443
