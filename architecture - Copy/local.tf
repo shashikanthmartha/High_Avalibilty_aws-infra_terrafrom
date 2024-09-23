@@ -1,5 +1,5 @@
 locals {
-  ssm_policies = [
+  local_ssm_policies = [
     "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
     "arn:aws:iam::aws:policy/AmazonSSMFullAccess",
     "arn:aws:iam::aws:policy/service-role/AmazonEC2RoleforSSM",
