@@ -37,7 +37,7 @@ rds_sg_egress_rules = {
   }
 }
 
-instance_type = "t2.micro"
+instance_type = "t3a.medium"
 ami_id        = "ami-09298640a92b2d12c" # Replace with a valid AMI ID for your region
 # alb_sg_ingress_rules = [
 #   {
